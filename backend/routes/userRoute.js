@@ -14,6 +14,7 @@ userRouter.post('/book-appointment', authUser, requireObjectIds(['docId']), requ
 userRouter.get('/appointments', authUser, listAppointment)
 userRouter.post('/cancel-appointment', authUser, requireObjectIds(['appointmentId']), cancelAppointment)
 userRouter.post('/payment-razorpay', authUser, requireObjectIds(['appointmentId']), paymentRazorpay)
-userRouter.post('/verifyRazorpay', authUser, requireFields(['razorpay_order_id']), verifyRazorpay)
+userRouter.post('/verifyRazorpay', authUser, requireFields(['razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature']), verifyRazorpay)
 
 export default userRouter;
+
