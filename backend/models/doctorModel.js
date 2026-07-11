@@ -16,5 +16,8 @@ const doctorSchema = new mongoose.Schema({
     date: { type: Number, required: true },
 }, { minimize: false })
 
+doctorSchema.index({ email: 1 }, { unique: true })
+doctorSchema.index({ speciality: 1, available: 1 })
+
 const doctorModel = mongoose.models.doctor || mongoose.model("doctor", doctorSchema);
 export default doctorModel;
