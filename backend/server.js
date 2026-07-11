@@ -7,6 +7,7 @@ import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminRoute.js'
 import doctorRouter from './routes/doctorRoute.js'
 import userRouter from './routes/userRoute.js'
+import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js'
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -46,5 +47,8 @@ app.get('/health', (req, res) => {
     database: isDatabaseConnected ? 'connected' : 'unavailable'
   })
 })
+
+app.use(notFoundHandler)
+app.use(errorHandler)
 
 app.listen(port, () => console.log(`Server started on PORT:${port}`))
