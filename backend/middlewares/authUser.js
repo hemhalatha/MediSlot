@@ -1,23 +1,23 @@
 import jwt from 'jsonwebtoken'
+import { getBearerToken } from '../utils/auth.js'
+import { sendError } from '../utils/apiResponse.js'
 
-// user authentication middleware
 const authUser = async (req, res, next) => {
-    const { token } = req.headers
-    if (!token) {
-        return res.json({ success: false, message: 'Not Authorized Login Again' })
-    }
-    try {
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET)
+  const token = getBearerToken(req, ['token'])
 
-        // ✅ Fix: Ensure req.body is defined before assigning to it
-        if (!req.body) req.body = {}
+  if (!token) {
+    return sendError(res, 'Authentication required', 401)
+  }
 
-        req.body.userId = token_decode.id
-        next()
-    } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: error.message })
-    }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = { id: decoded.id }
+    if (!req.body) req.body = {}
+    req.body.userId = decoded.id
+    next()
+  } catch (error) {
+    return sendError(res, 'Invalid or expired token', 401)
+  }
 }
 
 export default authUser
