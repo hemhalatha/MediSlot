@@ -3,6 +3,7 @@ import { DoctorContext } from '../../context/DoctorContext'
 import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { authHeaders } from '../../utils/authHeaders'
 
 const DoctorProfile = () => {
 
@@ -21,7 +22,7 @@ const DoctorProfile = () => {
                 available: profileData.available
             }
 
-            const { data } = await axios.post(backendUrl + '/api/doctor/update-profile', updateData, { headers: { dToken } })
+            const { data } = await axios.post(backendUrl + '/api/doctor/update-profile', updateData, { headers: authHeaders(dToken) })
 
             if (data.success) {
                 toast.success(data.message)

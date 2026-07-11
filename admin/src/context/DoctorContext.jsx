@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import axios from "axios";
+import { authHeaders } from '../utils/authHeaders';
 import { toast } from "react-toastify";
 
 export const DoctorContext = createContext();
@@ -16,7 +17,7 @@ const DoctorContextProvider = (props) => {
 
   const authHeader = {
     headers: {
-      Authorization: `Bearer ${dToken}`,
+      ...authHeaders(dToken),
     },
   };
 
@@ -143,3 +144,4 @@ const DoctorContextProvider = (props) => {
 };
 
 export default DoctorContextProvider;
+

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios'
+import { authHeaders } from '../utils/authHeaders'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
 
@@ -20,7 +21,7 @@ const MyProfile = () => {
             formData.append('dob', userData.dob)
             image && formData.append('image', image)
 
-            const { data } = await axios.post(backendUrl + '/api/user/update-profile', formData, { headers: { token } })
+            const { data } = await axios.post(backendUrl + '/api/user/update-profile', formData, { headers: authHeaders(token) })
 
             if (data.success) {
                 toast.success(data.message)
@@ -148,3 +149,4 @@ const MyProfile = () => {
 }
 
 export default MyProfile
+

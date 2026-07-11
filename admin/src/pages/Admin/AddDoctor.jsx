@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { authHeaders } from '../../utils/authHeaders'
 import { AdminContext } from '../../context/AdminContext'
 import { AppContext } from '../../context/AppContext'
 
@@ -49,7 +50,7 @@ const AddDoctor = () => {
       });
 
       const response = await axios.post(`${backendUrl}/api/admin/add-doctor`, formData, {
-        headers: { aToken}  })
+        headers: authHeaders(aToken)  })
       const data= response.data;
       if (data.success) {
                 toast.success(data.message)

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from 'axios'
+import { authHeaders } from '../utils/authHeaders'
 
 export const AppContext = createContext()
 
@@ -29,7 +30,7 @@ const AppContextProvider = (props) => {
     const loadUserProfileData = async () => {
         try {
             const { data } = await axios.get(backendUrl + '/api/user/get-profile', {
-                headers: { token }
+                headers: authHeaders(token)
             })
 
             if (data.success) {
@@ -75,3 +76,4 @@ const AppContextProvider = (props) => {
 }
 
 export default AppContextProvider
+

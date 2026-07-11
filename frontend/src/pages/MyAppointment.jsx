@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios'
+import { authHeaders } from '../utils/authHeaders'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
 
@@ -23,7 +24,7 @@ const MyAppointments = () => {
   const getUserAppointments = async () => {
     try {
 
-      const { data } = await axios.get(backendUrl + '/api/user/appointments', { headers: { token } })
+      const { data } = await axios.get(backendUrl + '/api/user/appointments', { headers: authHeaders(token) })
       setAppointments(data.appointments.reverse())
 
     } catch (error) {
@@ -37,7 +38,7 @@ const MyAppointments = () => {
 
     try {
 
-      const { data } = await axios.post(backendUrl + '/api/user/cancel-appointment', { appointmentId }, { headers: { token } })
+      const { data } = await axios.post(backendUrl + '/api/user/cancel-appointment', { appointmentId }, { headers: authHeaders(token) })
 
       if (data.success) {
         toast.success(data.message)
@@ -68,7 +69,7 @@ const MyAppointments = () => {
         console.log(response)
 
         try {
-          const { data } = await axios.post(backendUrl + "/api/user/verifyRazorpay", response, { headers: { token } });
+          const { data } = await axios.post(backendUrl + "/api/user/verifyRazorpay", response, { headers: authHeaders(token) });
           if (data.success) {
             navigate('/my-appointments')
             getUserAppointments()
@@ -86,7 +87,7 @@ const MyAppointments = () => {
   // Function to make payment using razorpay
   const appointmentRazorpay = async (appointmentId) => {
     try {
-      const { data } = await axios.post(backendUrl + '/api/user/payment-razorpay', { appointmentId }, { headers: { token } })
+      const { data } = await axios.post(backendUrl + '/api/user/payment-razorpay', { appointmentId }, { headers: authHeaders(token) })
       if (data.success) {
         initPay(data.order)
       } else {
@@ -166,3 +167,4 @@ const MyAppointments = () => {
 }
 
 export default MyAppointments
+

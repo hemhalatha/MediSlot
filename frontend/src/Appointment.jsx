@@ -4,6 +4,7 @@ import { AppContext } from './context/AppContext'
 import { assets } from './assets/assets'
 import RelatedDoctors from './components/RelatedDoctors'
 import axios from 'axios'
+import { authHeaders } from './utils/authHeaders'
 import { toast } from 'react-toastify'
 
 const Appointment = () => {
@@ -95,7 +96,7 @@ const Appointment = () => {
 
     try {
 
-      const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime }, { headers: { token } })
+      const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime }, { headers: authHeaders(token) })
       if (data.success) {
         toast.success(data.message)
         getDoctorsData()
@@ -206,3 +207,4 @@ const Appointment = () => {
 }
 
 export default Appointment
+
