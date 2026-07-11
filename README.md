@@ -74,6 +74,7 @@ CLOUDINARY_SECRET_KEY=<cloudinary-secret-key>
 RAZORPAY_KEY_ID=<razorpay-key-id>
 RAZORPAY_KEY_SECRET=<razorpay-key-secret>
 CURRENCY=INR
+CORS_ORIGINS=http://localhost:5173,http://localhost:5174
 ```
 
 ### Frontend
@@ -135,6 +136,24 @@ cd backend
 npm start
 ```
 
+
+## Docker Workflow
+
+The repository includes Dockerfiles for all three apps and a local `docker-compose.yml` for development-style container orchestration.
+
+```bash
+docker compose up --build
+```
+
+Default local container ports:
+
+- API: `http://localhost:4000`
+- Patient app: `http://localhost:8080`
+- Admin/doctor portal: `http://localhost:8081`
+- MongoDB: `mongodb://localhost:27017`
+
+For production, replace placeholder values in `docker-compose.yml` or your hosting provider environment settings. Do not use the sample `JWT_SECRET`, admin password, or third-party API keys in production.
+
 ## Deployment Notes
 
 - Deploy the backend as a Node.js web service.
@@ -147,3 +166,5 @@ npm start
 ## Repository Hygiene
 
 Generated dependencies and build outputs are intentionally ignored. Commit source files, lock files, configuration, and static assets only.
+
+
